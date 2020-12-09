@@ -16,15 +16,25 @@ const Product = () => {
     history.push('/');
   }
 
+  const handleOnChangeName = (event) => {
+    setProduct({name:event.target.value, description: product.description, price: product.price})
+  }
+
+  const handleOnChangeDescription = (event) => {
+    setProduct({name:product.name, description: event.target.value, price: product.price})
+  }
+  const handleOnChangePrice = (event) => {
+    setProduct({name: product.name, description: product.description, price: event.target.value})
+  }
+
   const handleSubmit = (type) => () => {
     const actionButton = {
-      create: (product) => {console.log(product);createProduct(product); history.push('/');},
-      update: updateProduct,
-      delete: (product) => {deleteProductById(product); history.push('/')},
+      create: (product) => {createProduct(product); history.push('/');},
+      update: (product) => {updateProduct(params.id,product)},
+      delete: (product) => {deleteProductById(params.id); history.push('/')},
     }
     if (actionButton[type]) 
       actionButton[type](product)
-      .then(console.log)
   }
 
   useEffect(() => {
@@ -32,6 +42,8 @@ const Product = () => {
       getProductById(params)
       .then(setProduct)
       .catch(console.log)
+    else
+      setProduct({name:'',description:'',price:0})
   },[]);
 
   return(
@@ -40,9 +52,9 @@ const Product = () => {
           {'id' in params ? 'Editar Produto' : 'Inserir Produto'}
         </Typography>
         <Form noValidate autoComplete="off">
-          <TextField id="outlined-basic" value={product.name} label="Name" variant="outlined" />
-          <TextField id="outlined-basic" value={product.description} label="Description" variant="outlined" />
-          <TextField id="outlined-basic" value={product.price} label="Price" variant="outlined" type='number' />
+          <TextField id="outlined-basic" onChange={handleOnChangeName} value={product.name} label="Name" variant="outlined" />
+          <TextField id="outlined-basic" onChange={handleOnChangeDescription} value={product.description} label="Description" variant="outlined" />
+          <TextField id="outlined-basic" onChange={handleOnChangePrice} value={product.price} label="Price" variant="outlined" type='number' />
           <ButtonsWrapper>
             <Button variant="contained" color="primary" onClick={handlePush}>
               Back

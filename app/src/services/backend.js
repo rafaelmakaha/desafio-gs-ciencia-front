@@ -8,6 +8,11 @@ const common_header = {
 export const getAllProducts = () => {
   const url = BACKEND.baseRoute + BACKEND.product.list.route;
   const method = BACKEND.product.list.method;
+  new Promise((resolve,reject)=>{
+    setTimeout( () => {
+      resolve()
+    }, 2000)
+  })
   return new Promise((resolve, reject) => {
     fetch(url, { method, headers: common_header })
     .then(validFetch)
@@ -17,11 +22,9 @@ export const getAllProducts = () => {
 }
 
 export const createProduct = (product) => {
-  console.log(BACKEND.baseRoute)
   const url = BACKEND.baseRoute + BACKEND.product.create.route;
   const method = BACKEND.product.create.method;
   return new Promise((resolve, reject) => {
-    console.log(JSON.stringify(product))
     fetch(url,{
       method,
       headers: common_header,
@@ -45,18 +48,22 @@ export const getProductById = ({id}) => {
   })
 }
 
-export const deleteProductById = ({id}) => {
+export const deleteProductById = (id) => {
   const url = BACKEND.baseRoute + BACKEND.product.delete.route(id);
   const method = BACKEND.product.delete.method;
+  new Promise((resolve,reject)=>{
+    setTimeout( () => {
+      resolve()
+    }, 2000)
+  })
   return new Promise((resolve, reject) => {
     fetch(url,{ method, headers: common_header })
-    .then(validFetch)
     .then(resolve)
     .catch(reject)
   })
 }
 
-export const updateProduct = ({id, ...product}) => {
+export const updateProduct = (id, product) => {
   const url = BACKEND.baseRoute + BACKEND.product.update.route(id);
   const method = BACKEND.product.update.method;
   return new Promise((resolve, reject) => {
