@@ -8,11 +8,6 @@ const common_header = {
 export const getAllProducts = () => {
   const url = BACKEND.baseRoute + BACKEND.product.list.route;
   const method = BACKEND.product.list.method;
-  new Promise((resolve,reject)=>{
-    setTimeout( () => {
-      resolve()
-    }, 2000)
-  })
   return new Promise((resolve, reject) => {
     fetch(url, { method, headers: common_header })
     .then(validFetch)
@@ -51,11 +46,6 @@ export const getProductById = ({id}) => {
 export const deleteProductById = (id) => {
   const url = BACKEND.baseRoute + BACKEND.product.delete.route(id);
   const method = BACKEND.product.delete.method;
-  new Promise((resolve,reject)=>{
-    setTimeout( () => {
-      resolve()
-    }, 2000)
-  })
   return new Promise((resolve, reject) => {
     fetch(url,{ method, headers: common_header })
     .then(resolve)
